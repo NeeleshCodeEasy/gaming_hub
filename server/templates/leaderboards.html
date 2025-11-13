@@ -1,0 +1,50 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <title>Gaming Hub — Leaderboards</title>
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/leaderboards.css') }}">
+</head>
+<body>
+  <header class="topbar">
+    <h1>🎮 Gaming Hub — Leaderboards</h1>
+    <a class="home" href="/">Home</a>
+  </header>
+
+  <main class="container">
+    {% if leaders %}
+      {% for game, rows in leaders.items() %}
+        <section class="board">
+          <h2>{{ game.replace('_',' ').title() }}</h2>
+          {% if rows %}
+            <table>
+              <thead>
+                <tr><th>#</th><th>Player</th><th>Score</th><th>When</th></tr>
+              </thead>
+              <tbody>
+                {% for i,row in enumerate(rows) %}
+                  <tr>
+                    <td>{{ i+1 }}</td>
+                    <td>{{ row.username }}</td>
+                    <td>{{ row.score }}</td>
+                    <td>{{ row.when }}</td>
+                  </tr>
+                {% endfor %}
+              </tbody>
+            </table>
+          {% else %}
+            <p class="muted">No scores yet.</p>
+          {% endif %}
+        </section>
+      {% endfor %}
+    {% else %}
+      <p class="muted">No games found yet.</p>
+    {% endif %}
+  </main>
+
+  <footer class="foot">
+    <p>Gaming Hub • MCA Project</p>
+  </footer>
+</body>
+</html>
